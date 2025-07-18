@@ -198,80 +198,15 @@ The project includes comprehensive test coverage for all components:
 #### Running Tests
 
 ```bash
-# Run all tests
-bun test
 
-# Run tests in isolation (recommended for CI/CD)
+# Run tests in isolation
 bun run test:isolated
 
-# Run tests in watch mode
-bun run test:watch
-
-# Run tests with coverage
-bun run test:coverage
-
-# Run only unit tests
-bun run test:unit
-
-# Run only integration tests
-bun run test:integration
+# Run specific module test
+bun run test swap-util
 ```
 
 **Note**: Due to module mocking conflicts in complex test suites, some tests may fail when run together but pass individually. Use `bun run test:isolated` to run tests in separate processes for guaranteed isolation.
-
-#### Test Structure
-
-The test suite includes:
-
-1. **API Integration Tests** (`src/api/routes.test.ts`)
-   - Tests all API endpoints
-   - Validates request/response formats
-   - Tests error handling and edge cases
-   - Covers multi-chain support
-
-2. **Unit Tests for Core Components**:
-   - **TokenMappingService** (`src/utils/token-mapper-service.test.ts`)
-     - Tests singleton pattern
-     - Validates per-chain caching (5-minute TTL)
-     - Tests ERC4626 token mapping
-     - Error handling and fallback mechanisms
-
-   - **Chain Configuration** (`src/utils/chain-config.test.ts`)
-     - Tests chain configuration loading
-     - Validates environment variable parsing
-     - Tests singleton pattern implementation
-
-   - **GraphQL Client** (`src/graphql/client.test.ts`)
-     - Tests subgraph queries with mocking
-     - Validates pagination for large datasets
-     - Tests token mapping integration
-     - Error handling for network issues
-
-   - **Adapter** (`src/adapters/balancer-v3-amm-adapter.test.ts`)
-     - Tests event processing (swaps, joins, exits)
-     - Validates data transformation
-     - Tests error handling and logging
-
-   - **Utility Functions**:
-     - **Pair Utilities** (`src/utils/pair-util.test.ts`)
-       - Tests pair ID generation and parsing
-       - Validates swap and add/remove event matching
-       - Tests fee conversion to basis points
-     - **Swap Utilities** (`src/utils/swap-util.test.ts`)
-       - Tests price calculations
-       - Validates reserve calculations
-       - Edge case handling for extreme values
-
-#### Test Coverage
-
-The tests cover:
-- ✅ All API endpoints across 9 supported chains
-- ✅ Token mapping with ERC4626 support and caching
-- ✅ GraphQL client with pagination and error handling
-- ✅ Event processing and data transformation
-- ✅ Utility functions with edge cases
-- ✅ Error handling and logging
-- ✅ Multi-chain configuration management
 
 ## 🔧 Adding New Chains
 
