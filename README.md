@@ -299,4 +299,85 @@ The adapter automatically handles ERC4626 wrapped tokens by:
 }
 ```
 
+## 🚀 Deployment
+
+### Deploy to Vercel
+
+This application is optimized for serverless deployment on Vercel:
+
+#### One-Click Deploy
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/your-username/balancer-v3-dex-screener-adapter)
+
+#### Manual Deployment
+
+1. **Fork/Clone this repository**
+
+2. **Install Vercel CLI** (if not already installed):
+
+```bash
+npm install -g vercel
+```
+
+3. **Login to Vercel**:
+
+```bash
+vercel login
+```
+
+4. **Configure Environment Variables**:
+
+    - Copy `.env.example` to understand required variables
+    - In Vercel Dashboard → Project → Settings → Environment Variables
+    - Add all required chain configuration variables:
+        ```
+        SUBGRAPH_URL_ETHEREUM=https://your-ethereum-subgraph-url
+        RPC_URL_ETHEREUM=https://your-ethereum-rpc-url
+        SUBGRAPH_URL_ARBITRUM=https://your-arbitrum-subgraph-url
+        RPC_URL_ARBITRUM=https://your-arbitrum-rpc-url
+        # ... add other chains as needed
+        ```
+
+5. **Deploy**:
+
+```bash
+vercel --prod
+```
+
+#### Environment Variables for Vercel
+
+Required environment variables (set in Vercel Dashboard):
+
+| Variable                | Description                | Example                                     |
+| ----------------------- | -------------------------- | ------------------------------------------- |
+| `SUBGRAPH_URL_ETHEREUM` | Ethereum subgraph endpoint | `https://api.studio.thegraph.com/query/...` |
+| `RPC_URL_ETHEREUM`      | Ethereum RPC endpoint      | `https://eth-mainnet.alchemyapi.io/v2/KEY`  |
+| `SUBGRAPH_URL_ARBITRUM` | Arbitrum subgraph endpoint | `https://api.studio.thegraph.com/query/...` |
+| `RPC_URL_ARBITRUM`      | Arbitrum RPC endpoint      | `https://arb-mainnet.g.alchemy.com/v2/KEY`  |
+| ...                     | Additional chains          | ...                                         |
+
+#### Vercel Configuration
+
+The project includes:
+
+-   `vercel.json` - Vercel deployment configuration
+-   `api/index.ts` - Serverless function entry point
+-   Automatic TypeScript compilation during build
+
+#### Post-Deployment
+
+After deployment, your API will be available at:
+
+```
+https://your-project.vercel.app/api/health
+https://your-project.vercel.app/api/chains
+https://your-project.vercel.app/api/{chain}/latest-block
+```
+
+### Local Development vs. Production
+
+-   **Local**: Uses `src/server.ts` with Express server
+-   **Vercel**: Uses `api/index.ts` with serverless functions
+-   Both share the same API routes and business logic
+
 **Built with ❤️ for the Balancer ecosystem**

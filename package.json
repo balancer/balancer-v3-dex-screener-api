@@ -5,9 +5,12 @@
     "main": "dist/index.js",
     "scripts": {
         "build": "tsc",
+        "vercel-build": "tsc",
         "dev": "bun run --hot src/server.ts",
         "start": "bun run dist/server.js",
         "test": "bun test",
+        "test:unit": "bun test src/utils src/adapters src/graphql --exclude='**/routes.test.ts'",
+        "test:integration": "bun test src/api/routes.test.ts",
         "test:isolated": "node test-runner.js",
         "test:watch": "bun test --watch",
         "test:coverage": "bun test --coverage",
@@ -26,18 +29,24 @@
     "license": "MIT",
     "dependencies": {
         "@types/lodash": "^4.14.0",
+        "@vercel/node": "^3.0.0",
         "cors": "^2.8.5",
         "dotenv": "^17.2.0",
         "express": "^4.18.0",
         "graphql": "^16.8.0",
         "graphql-request": "^6.1.0",
+        "helmet": "^7.0.0",
         "lodash": "^4.17.21",
-        "viem": "^2.32.0"
+        "morgan": "^1.10.0",
+        "serverless-http": "^3.2.0",
+        "viem": "^2.32.0",
+        "zod": "^3.22.0"
     },
     "devDependencies": {
         "@types/cors": "^2.8.19",
         "@types/dotenv": "^6.1.1",
         "@types/express": "^5.0.3",
+        "@types/morgan": "^1.9.10",
         "@types/node": "^20.0.0",
         "@types/supertest": "^6.0.3",
         "@typescript-eslint/eslint-plugin": "^6.0.0",
