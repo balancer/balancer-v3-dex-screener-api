@@ -1,7 +1,6 @@
-import serverless from 'serverless-http';
+import { VercelRequest, VercelResponse } from '@vercel/node';
 import express from 'express';
 import cors from 'cors';
-import helmet from 'helmet';
 import routes from '../src/api/routes';
 import { ChainConfigService } from '../src/utils/chain-config';
 
@@ -9,7 +8,6 @@ import { ChainConfigService } from '../src/utils/chain-config';
 const app = express();
 
 // Middleware
-app.use(helmet()); // Security headers
 app.use(cors()); // Enable CORS
 app.use(express.json({ limit: '10mb' })); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true, limit: '10mb' })); // Parse URL-encoded bodies
@@ -60,5 +58,7 @@ app.use((err: Error, req: express.Request, res: express.Response, next: express.
     });
 });
 
-// Export serverless handler
-export default serverless(app);
+// Export Vercel handler
+export default (req: VercelRequest, res: VercelResponse) => {
+    return app(req as any, res as any);
+};
