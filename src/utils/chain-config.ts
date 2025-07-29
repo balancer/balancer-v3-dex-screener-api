@@ -83,18 +83,6 @@ export class ChainConfigService {
             });
         }
 
-        // Polygon configuration
-        const polygonSubgraphUrl = process.env.SUBGRAPH_URL_POLYGON;
-        const polygonRpcUrl = process.env.RPC_URL_POLYGON;
-        if (polygonSubgraphUrl && polygonRpcUrl) {
-            this.configs.set('polygon', {
-                apiSlug: 'POLYGON',
-                viemChain: polygon,
-                subgraphUrl: polygonSubgraphUrl,
-                rpcUrl: polygonRpcUrl,
-            });
-        }
-
         // Optimism configuration
         const optimismSubgraphUrl = process.env.SUBGRAPH_URL_OPTIMISM;
         const optimismRpcUrl = process.env.RPC_URL_OPTIMISM;

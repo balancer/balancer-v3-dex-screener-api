@@ -26,7 +26,7 @@ All chain-specific endpoints follow the pattern: `/api/{chain}/...`
 | ------------------------------------------------------- | ------------------ | ---------------------------------------------- |
 | `GET /api/{chain}/latest-block`                         | Latest block info  | `/api/ethereum/latest-block`                   |
 | `GET /api/{chain}/asset?id={address}`                   | Token information  | `/api/arbitrum/asset?id=0x123...`              |
-| `GET /api/{chain}/pair?id={pairId}`                     | Pair information   | `/api/polygon/pair?id=0xabc...`                |
+| `GET /api/{chain}/pair?id={pairId}`                     | Pair information   | `/api/base/pair?id=0xabc...`                   |
 | `GET /api/{chain}/events?fromBlock={from}&toBlock={to}` | Block range events | `/api/base/events?fromBlock=1000&toBlock=2000` |
 
 ### API Examples
@@ -76,7 +76,7 @@ curl "http://localhost:3001/api/arbitrum/asset?id=0x82af49447d8a07e3bd95bd0d56f3
 #### Get Events
 
 ```bash
-curl "http://localhost:3001/api/polygon/events?fromBlock=50000000&toBlock=50000100"
+curl "http://localhost:3001/api/base/events?fromBlock=50000000&toBlock=50000100"
 ```
 
 ```json
@@ -120,7 +120,7 @@ For each supported chain, you need two environment variables:
 -   `SUBGRAPH_URL_{CHAIN}` - The GraphQL subgraph endpoint
 -   `RPC_URL_{CHAIN}` - The JSON-RPC endpoint
 
-Where `{CHAIN}` is the uppercase chain slug (e.g., `ETHEREUM`, `ARBITRUM`, `POLYGON`).
+Where `{CHAIN}` is the uppercase chain slug (e.g., `ETHEREUM`, `ARBITRUM`).
 
 ## 🛠️ Installation & Setup
 
@@ -294,7 +294,7 @@ The adapter automatically handles ERC4626 wrapped tokens by:
 ```json
 {
     "success": false,
-    "error": "Unsupported chain: xyz. Supported chains: ethereum, arbitrum, polygon, optimism, base, avalanche, gnosis, sonic, hyperevm",
+    "error": "Unsupported chain: xyz. Supported chains: ethereum, arbitrum, optimism, base, avalanche, gnosis, sonic, hyperevm",
     "timestamp": 1752762677324
 }
 ```
