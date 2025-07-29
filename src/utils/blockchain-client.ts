@@ -96,7 +96,7 @@ export async function getTokenInfo(tokenAddress: string, chainConfig: ChainConfi
         };
     } catch (error) {
         console.error('Error fetching token info:', error);
-        // Return default values if contract call fails
+        // Return default value if contract call fails
         return {
             name: 'Unknown Token',
             symbol: 'UNKNOWN',
