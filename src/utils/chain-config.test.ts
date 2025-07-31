@@ -17,8 +17,6 @@ describe('ChainConfigService', () => {
         process.env.RPC_URL_ETHEREUM = 'https://test-ethereum-rpc.com';
         process.env.SUBGRAPH_URL_ARBITRUM = 'https://test-arbitrum-subgraph.com';
         process.env.RPC_URL_ARBITRUM = 'https://test-arbitrum-rpc.com';
-        process.env.SUBGRAPH_URL_POLYGON = 'https://test-polygon-subgraph.com';
-        process.env.RPC_URL_POLYGON = 'https://test-polygon-rpc.com';
 
         service = ChainConfigService.getInstance();
     });
@@ -50,7 +48,6 @@ describe('ChainConfigService', () => {
 
             expect(supportedChains).toContain('ethereum');
             expect(supportedChains).toContain('arbitrum');
-            expect(supportedChains).toContain('polygon');
         });
 
         it('should not load chains with missing environment variables', () => {
@@ -65,7 +62,6 @@ describe('ChainConfigService', () => {
 
             expect(supportedChains).not.toContain('ethereum');
             expect(supportedChains).toContain('arbitrum');
-            expect(supportedChains).toContain('polygon');
         });
 
         it('should load custom chain definitions', () => {
@@ -127,7 +123,6 @@ describe('ChainConfigService', () => {
             } catch (error) {
                 expect((error as Error).message).toContain('ethereum');
                 expect((error as Error).message).toContain('arbitrum');
-                expect((error as Error).message).toContain('polygon');
             }
         });
     });
@@ -140,7 +135,6 @@ describe('ChainConfigService', () => {
             expect(chains.length).toBeGreaterThan(0);
             expect(chains).toContain('ethereum');
             expect(chains).toContain('arbitrum');
-            expect(chains).toContain('polygon');
         });
 
         it('should return chains in consistent order', () => {
@@ -165,7 +159,6 @@ describe('ChainConfigService', () => {
             const testChains = [
                 { slug: 'ethereum', apiSlug: 'MAINNET', chainId: 1 },
                 { slug: 'arbitrum', apiSlug: 'ARBITRUM', chainId: 42161 },
-                { slug: 'polygon', apiSlug: 'POLYGON', chainId: 137 },
             ];
 
             testChains.forEach(({ slug, apiSlug, chainId }) => {

@@ -1,5 +1,5 @@
 import { Chain } from 'viem';
-import { mainnet, sonic, arbitrum, polygon, optimism, base, avalanche, gnosis } from 'viem/chains';
+import { mainnet, sonic, arbitrum, optimism, base, avalanche, gnosis } from 'viem/chains';
 
 // Custom chain definition for HyperEVM
 const hyperevm: Chain = {

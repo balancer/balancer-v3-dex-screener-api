@@ -18,17 +18,16 @@ export class BalancerV3SubgraphClient {
     private getChainSlug(): string {
         // Convert API slug to chain slug for token mapping
         const apiSlugToChainSlug: Record<string, string> = {
-            'SONIC': 'sonic',
-            'MAINNET': 'ethereum',
-            'ARBITRUM': 'arbitrum',
-            'POLYGON': 'polygon',
-            'OPTIMISM': 'optimism',
-            'BASE': 'base',
-            'AVALANCHE': 'avalanche',
-            'GNOSIS': 'gnosis',
-            'HYPEREVM': 'hyperevm'
+            SONIC: 'sonic',
+            MAINNET: 'ethereum',
+            ARBITRUM: 'arbitrum',
+            OPTIMISM: 'optimism',
+            BASE: 'base',
+            AVALANCHE: 'avalanche',
+            GNOSIS: 'gnosis',
+            HYPEREVM: 'hyperevm',
         };
-        
+
         return apiSlugToChainSlug[this.chainConfig.apiSlug] || this.chainConfig.apiSlug.toLowerCase();
     }
 
