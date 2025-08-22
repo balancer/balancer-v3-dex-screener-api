@@ -1,3 +1,5 @@
+import { getAddress } from 'viem';
+import { PairResponse } from '../api/types';
 import { SubgraphPool } from '../types/subgraph-types';
 
 // Generate pair ID following the pattern: [poolAddress]-[asset0Id]-[asset1Id]
@@ -34,10 +36,42 @@ export function parsePairId(pairId: string): {
     }
 
     return {
-        poolAddress: parts[0],
-        asset0Id: parts[1],
-        asset1Id: parts[2],
+        poolAddress: parts[0].toLowerCase(),
+        asset0Id: parts[1].toLowerCase(),
+        asset1Id: parts[2].toLowerCase(),
     };
+}
+
+export function checksumPair(pair: PairResponse): PairResponse {
+    return {
+        ...pair,
+        id: checksumPairId(pair.id),
+        asset0Id: getAddress(pair.asset0Id),
+        asset1Id: getAddress(pair.asset1Id),
+        creationTxnId: pair.creationTxnId ? getAddress(pair.creationTxnId) : null,
+        creator: pair.creator ? getAddress(pair.creator) : null,
+        pool: pair.pool
+            ? {
+                  ...pair.pool,
+                  id: getAddress(pair.pool.id),
+                  assetIds: pair.pool.assetIds.map((aid) => getAddress(aid)),
+                  pairIds: pair.pool.pairIds.map((pid) => checksumPairId(pid)),
+              }
+            : undefined,
+    };
+}
+
+export function checksumPairId(pairId: string): string {
+    const parts = pairId.split('-');
+    if (parts.length !== 3) {
+        throw new Error(`Invalid pair ID format: ${pairId}`);
+    }
+
+    const poolAddress = getAddress(parts[0]);
+    const asset0Id = getAddress(parts[1]);
+    const asset1Id = getAddress(parts[2]);
+
+    return `${poolAddress}-${asset0Id}-${asset1Id}`;
 }
 
 // Check if a swap involves the tokens in a specific pair

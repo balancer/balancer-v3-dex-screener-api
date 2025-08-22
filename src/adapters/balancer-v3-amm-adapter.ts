@@ -7,10 +7,13 @@ import {
     isSwapForPair,
     isAddRemoveForPair,
     convertFeeToBps,
+    checksumPair,
+    checksumPairId,
 } from '../utils/pair-util';
 import { calculatePrice, calculateReserves } from '../utils/swap-util';
 import { Logger } from '../utils/logger';
 import { ChainConfig } from '../utils/chain-config';
+import { getAddress } from 'viem';
 
 export class BalancerV3AMMAdapter {
     public subgraphClient: BalancerV3SubgraphClient;
@@ -58,7 +61,7 @@ export class BalancerV3AMMAdapter {
         const convertedJoinExits = await this.convertJoinExits(addRemoves);
 
         // Combine all events and sort by block number, then by transaction index
-        const allEvents = [...convertedSwaps, ...convertedJoinExits];
+        const allEvents = checksumEvents([...convertedSwaps, ...convertedJoinExits]);
         return allEvents.sort((a, b) => {
             const blockDiff = a.block.blockNumber - b.block.blockNumber;
             if (blockDiff !== 0) return blockDiff;
@@ -75,7 +78,7 @@ export class BalancerV3AMMAdapter {
             throw new Error(`Pool not found: ${poolAddress}`);
         }
 
-        return {
+        return checksumPair({
             id: params.pairId,
             dexKey: 'balancer-v3',
             feeBps: convertFeeToBps(pool.swapFee),
@@ -94,7 +97,7 @@ export class BalancerV3AMMAdapter {
                     symbol: pool.symbol,
                 },
             },
-        };
+        });
     }
 
     private async convertSwaps(swaps: SubgraphSwap[]): Promise<SwapEvent[]> {
@@ -260,4 +263,14 @@ export class BalancerV3AMMAdapter {
 
         return convertedJoinExits;
     }
+}
+function checksumEvents(events: (SwapEvent | JoinExitEvent)[]): (SwapEvent | JoinExitEvent)[] {
+    return events.map((event) => {
+        return {
+            ...event,
+            txnId: getAddress(event.txnId),
+            maker: getAddress(event.maker),
+            pairId: checksumPairId(event.pairId),
+        };
+    });
 }

@@ -3,6 +3,7 @@ import { BalancerV3AMMAdapter } from '../adapters/balancer-v3-amm-adapter';
 import { getTokenInfo } from '../utils/blockchain-client';
 import { LatestBlockResponse, AssetResponse, EventsResponse, SwapEvent, JoinExitEvent } from './types';
 import { ChainConfigService } from '../utils/chain-config';
+import { getAddress } from 'viem';
 
 const router = Router();
 
@@ -56,10 +57,10 @@ router.get('/:chain/asset', async (req: Request, res: Response) => {
         }
 
         const chainConfig = chainConfigService.getChainConfig(chainSlug);
-        const tokenInfo = await getTokenInfo(assetId, chainConfig);
+        const tokenInfo = await getTokenInfo(assetId.toLowerCase(), chainConfig);
 
         const response: AssetResponse = {
-            id: assetId,
+            id: getAddress(assetId),
             name: tokenInfo.name,
             symbol: tokenInfo.symbol,
             totalSupply: tokenInfo.totalSupply,
