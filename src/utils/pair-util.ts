@@ -48,7 +48,6 @@ export function checksumPair(pair: PairResponse): PairResponse {
         id: checksumPairId(pair.id),
         asset0Id: getAddress(pair.asset0Id),
         asset1Id: getAddress(pair.asset1Id),
-        creationTxnId: pair.creationTxnId ? getAddress(pair.creationTxnId) : null,
         creator: pair.creator ? getAddress(pair.creator) : null,
         pool: pair.pool
             ? {

@@ -268,7 +268,6 @@ function checksumEvents(events: (SwapEvent | JoinExitEvent)[]): (SwapEvent | Joi
     return events.map((event) => {
         return {
             ...event,
-            txnId: getAddress(event.txnId),
             maker: getAddress(event.maker),
             pairId: checksumPairId(event.pairId),
         };
