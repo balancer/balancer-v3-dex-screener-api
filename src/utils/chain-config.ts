@@ -142,6 +142,37 @@ export class ChainConfigService {
                 rpcUrl: hyperevmRpcUrl,
             });
         }
+
+        // Plasma configuration
+        const plasmaSubgraphUrl = process.env.SUBGRAPH_URL_PLASMA;
+        const plasmaRpcUrl = process.env.RPC_URL_PLASMA;
+        if (plasmaSubgraphUrl && plasmaRpcUrl) {
+            this.configs.set('plasma', {
+                apiSlug: 'PLASMA',
+                viemChain: {
+                    id: 9745,
+                    name: 'plasma',
+                    nativeCurrency: {
+                        decimals: 18,
+                        name: 'Plasma',
+                        symbol: 'PLASMA',
+                    },
+                    rpcUrls: {
+                        default: {
+                            http: [plasmaRpcUrl],
+                        },
+                    },
+                    blockExplorers: {
+                        default: {
+                            name: 'Plasma Block Explorer',
+                            url: 'https://plasmascan.to/',
+                        },
+                    },
+                },
+                subgraphUrl: plasmaSubgraphUrl,
+                rpcUrl: plasmaRpcUrl,
+            });
+        }
     }
 
     public getChainConfig(chainSlug: string): ChainConfig {

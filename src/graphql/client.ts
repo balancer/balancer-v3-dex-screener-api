@@ -26,6 +26,7 @@ export class BalancerV3SubgraphClient {
             AVALANCHE: 'avalanche',
             GNOSIS: 'gnosis',
             HYPEREVM: 'hyperevm',
+            PLASMA: 'plasma',
         };
 
         return apiSlugToChainSlug[this.chainConfig.apiSlug] || this.chainConfig.apiSlug.toLowerCase();
